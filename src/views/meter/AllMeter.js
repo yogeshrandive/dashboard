@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Navigate, NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { cilPen } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
+import { cilPen } from '@coreui/icons'
+import { useSelector } from 'react-redux'
 import {
   CCard,
   CCardBody,
@@ -17,22 +16,20 @@ import {
   CTableHeaderCell,
   CTableRow,
   CNavLink,
-  CButton,
 } from '@coreui/react'
 
-import CustomerService from './../../services/customer.service'
+import MeterService from './../../services/meter.service'
 import EventBus from './../../common/EventBus'
 
-function AllCustomer() {
+function AllMeter() {
   const { isLoggedIn } = useSelector((state) => {
     return state.auth
   })
   const [content, setContent] = useState(null)
 
   useEffect(() => {
-    CustomerService.getAllCustomers().then(
+    MeterService.getAll().then(
       (response) => {
-        console.log(response)
         if (response.data) setContent(response.data.message)
         else setContent(null)
       },
@@ -45,7 +42,6 @@ function AllCustomer() {
         setContent(null)
 
         if (responseMessage === 'Unauthorized' || error.response.status === 401) {
-          console.log('Adasda')
           EventBus.dispatch('logout')
         }
       },
@@ -59,17 +55,18 @@ function AllCustomer() {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>All Customers</strong>
+            <strong>All Meters</strong>
           </CCardHeader>
           <CCardBody>
             <CTable striped>
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
-                  {/* <CTableHeaderCell scope="col">Email</CTableHeaderCell> */}
+                  <CTableHeaderCell scope="col">Number</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Reading</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Consumer</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                  {/* <CTableHeaderCell scope="col">Onboard At</CTableHeaderCell> */}
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -78,13 +75,11 @@ function AllCustomer() {
                     return (
                       <CTableRow key={index}>
                         <CTableHeaderCell scope="row">{index + 1}</CTableHeaderCell>
+                        <CTableDataCell>{listValue.number}</CTableDataCell>
+                        <CTableDataCell>{listValue.bill_zero_reading}</CTableDataCell>
+                        <CTableDataCell>{listValue.id_consumer}</CTableDataCell>
                         <CTableDataCell>
-                          {listValue.firstname} {listValue.lastname}
-                        </CTableDataCell>
-                        <CTableDataCell>{listValue.mobile_number}</CTableDataCell>
-                        {/* <CTableDataCell>{listValue.email}</CTableDataCell> */}
-                        <CTableDataCell>
-                          <CNavLink to={'/customer/edit/' + listValue.id} component={NavLink}>
+                          <CNavLink to={'/meter/edit/' + listValue.id} component={NavLink}>
                             <CIcon icon={cilPen}></CIcon>
                           </CNavLink>
                         </CTableDataCell>
@@ -94,7 +89,7 @@ function AllCustomer() {
                 ) : (
                   <CTableRow>
                     <CTableHeaderCell scope="row">#</CTableHeaderCell>
-                    <CTableDataCell colSpan="4">No Customer available</CTableDataCell>
+                    <CTableDataCell colSpan="4">No Meter available</CTableDataCell>
                   </CTableRow>
                 )}
               </CTableBody>
@@ -106,4 +101,4 @@ function AllCustomer() {
   )
 }
 
-export default AllCustomer
+export default AllMeter

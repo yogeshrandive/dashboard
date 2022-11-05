@@ -1,13 +1,13 @@
 import axios from 'axios'
 import authHeader from './auth-header'
 
-const API_URL = process.env.REACT_APP_API_URL + '/v1/customer'
+const API_URL = process.env.REACT_APP_API_URL + '/v1/meter'
 
-const getAllCustomers = () => {
+const getAll = () => {
   return axios.get(API_URL + '/', { headers: authHeader() })
 }
 
-const saveCustomer = (data) => {
+const create = (data) => {
   return axios.post(API_URL + '/', data, { headers: authHeader() })
 }
 
@@ -15,19 +15,23 @@ const getById = (id) => {
   return axios.get(API_URL + `/${id}`, { headers: authHeader() })
 }
 
-const update = (id, data) => {
+const update = (data, id) => {
   return axios.post(API_URL + `/${id}`, data, { headers: authHeader() })
 }
 
-const getAssignMeter = (id) => {
-  return axios.get(API_URL + `/${id}/meter`, { headers: authHeader() })
+const getActiveMeter = () => {
+  return axios.get(API_URL + '/', { params: { active: 1 }, headers: authHeader() })
 }
 
+const assignMeter = (idMeter, id_customer) => {
+  return axios.post(API_URL + `/${idMeter}/consumer`, { id_customer }, { headers: authHeader() })
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  getAllCustomers,
-  saveCustomer,
+  getAll,
+  create,
   getById,
   update,
-  getAssignMeter,
+  getActiveMeter,
+  assignMeter,
 }
