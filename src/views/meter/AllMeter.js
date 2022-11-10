@@ -51,53 +51,53 @@ function AllMeter() {
   if (!isLoggedIn) return <Navigate to="/login" />
 
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>All Meters</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CTable striped>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Number</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Reading</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Consumer</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Action</CTableHeaderCell>
-                  {/* <CTableHeaderCell scope="col">Onboard At</CTableHeaderCell> */}
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {content ? (
-                  content.map((listValue, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableHeaderCell scope="row">{index + 1}</CTableHeaderCell>
-                        <CTableDataCell>{listValue.number}</CTableDataCell>
-                        <CTableDataCell>{listValue.bill_zero_reading}</CTableDataCell>
-                        <CTableDataCell>{listValue.id_consumer}</CTableDataCell>
-                        <CTableDataCell>
-                          <CNavLink to={'/meter/edit/' + listValue.id} component={NavLink}>
-                            <CIcon icon={cilPen}></CIcon>
-                          </CNavLink>
-                        </CTableDataCell>
-                      </CTableRow>
-                    )
-                  })
-                ) : (
-                  <CTableRow>
-                    <CTableHeaderCell scope="row">#</CTableHeaderCell>
-                    <CTableDataCell colSpan="4">No Meter available</CTableDataCell>
+    <CCard className="mb-4">
+      <CCardHeader>
+        <strong>All Meters</strong>
+      </CCardHeader>
+      <CCardBody>
+        <CTable align="middle" className="mb-0 border" hover responsive bordered>
+          <CTableHead color="dark">
+            <CTableRow className="text-center">
+              <CTableHeaderCell scope="col" className="text-center">
+                #
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Number</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Reading</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Consumer ID</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+              {/* <CTableHeaderCell scope="col">Onboard At</CTableHeaderCell> */}
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            {content ? (
+              content.map((listValue, index) => {
+                return (
+                  <CTableRow v-for="item in tableItems" key={index}>
+                    <CTableHeaderCell scope="row" className="text-center">
+                      {index + 1}
+                    </CTableHeaderCell>
+                    <CTableDataCell>{listValue.number}</CTableDataCell>
+                    <CTableDataCell>{listValue.bill_zero_reading}</CTableDataCell>
+                    <CTableDataCell>{listValue.id_consumer}</CTableDataCell>
+                    <CTableDataCell className="text-center">
+                      <CNavLink to={'/meter/edit/' + listValue.id} component={NavLink}>
+                        <CIcon icon={cilPen}></CIcon>
+                      </CNavLink>
+                    </CTableDataCell>
                   </CTableRow>
-                )}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+                )
+              })
+            ) : (
+              <CTableRow>
+                <CTableHeaderCell scope="row">#</CTableHeaderCell>
+                <CTableDataCell colSpan="4">No Meter available</CTableDataCell>
+              </CTableRow>
+            )}
+          </CTableBody>
+        </CTable>
+      </CCardBody>
+    </CCard>
   )
 }
 

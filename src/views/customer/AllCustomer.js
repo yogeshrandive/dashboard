@@ -65,11 +65,15 @@ function AllCustomer() {
             <CTable striped>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col" className="text-center">
+                    #
+                  </CTableHeaderCell>
                   <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
                   {/* <CTableHeaderCell scope="col">Email</CTableHeaderCell> */}
-                  <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                  <CTableHeaderCell scope="col" className="text-center">
+                    Action
+                  </CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -77,13 +81,15 @@ function AllCustomer() {
                   content.map((listValue, index) => {
                     return (
                       <CTableRow key={index}>
-                        <CTableHeaderCell scope="row">{index + 1}</CTableHeaderCell>
+                        <CTableHeaderCell scope="row" className="text-center">
+                          {index + 1}
+                        </CTableHeaderCell>
                         <CTableDataCell>
                           {listValue.firstname} {listValue.lastname}
                         </CTableDataCell>
                         <CTableDataCell>{listValue.mobile_number}</CTableDataCell>
                         {/* <CTableDataCell>{listValue.email}</CTableDataCell> */}
-                        <CTableDataCell>
+                        <CTableDataCell className="text-center">
                           <CNavLink to={'/customer/edit/' + listValue.id} component={NavLink}>
                             <CIcon icon={cilPen}></CIcon>
                           </CNavLink>
